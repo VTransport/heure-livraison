@@ -67,10 +67,10 @@
             const resultDiv = document.getElementById("result");
             const circulaireImg = document.getElementById("circulaire");
 
-            if (!email || deliveryData.length === 0) {
-                resultDiv.innerText = "Veuillez entrer un courriel valide.";
-                circulaireImg.style.display = "none";
-                return;
+           if (!email || deliveryData.length === 0) {
+               resultDiv.innerText = "Veuillez entrer un courriel valide.";
+               circulaireImg.style.display = "none";
+               return;
             }
 
             const found = deliveryData.find(entry =>
@@ -78,22 +78,24 @@
             );
 
             if (found) {
+                // ✅ Affiche toujours l’heure de livraison
                 resultDiv.innerHTML = `
                     <strong>Votre livraison est prévue à : ${found["Heure et date d'arrivée du conducteur"]}</strong><br>
                     <small>L’heure de livraison est approximative. Il se peut, selon certains facteurs, que votre commande arrive plus tôt ou avec un léger retard.</small><br><br>
                     <b>Merci de faire affaire avec nous et bonne journée !</b>
-                `;
-
-                // Cacher ou afficher la circulaire selon l'adresse
+                `;  
+                
+                // ❌ Affiche l’image de la circulaire SEULEMENT si le courriel n’est pas dans la liste d’exclusion
                 if (emailsSansCirculaire.includes(email)) {
                     circulaireImg.style.display = "none";
                 } else {
                     circulaireImg.style.display = "block";
                 }
 
-            } else {
-                resultDiv.innerText = "Courriel non trouvé.";
-                circulaireImg.style.display = "none";
+           } else {
+               // Si le courriel n’est pas trouvé
+               resultDiv.innerText = "Courriel non trouvé.";
+               circulaireImg.style.display = "none";
             }
         }
 
